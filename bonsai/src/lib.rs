@@ -123,10 +123,11 @@ pub use behavior::Behavior::{
     WhileAll,
 };
 
-pub use bt::{BT, BlackBoard};
+pub use bt::{BlackBoard, BT};
 pub use event::{Event, Timer, UpdateArgs, UpdateEvent};
 pub use state::{ActionArgs, State, RUNNING};
 pub use status::Status::{self, Failure, Running, Success};
+pub use visualizer::NodeType;
 
 mod behavior;
 mod bt;
