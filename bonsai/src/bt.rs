@@ -107,15 +107,20 @@ impl<A: Clone + Debug, K: Debug> BT<A, K> {
     }
 
     pub(crate) fn get_graphviz_with_graph_instance(&mut self) -> (String, Graph<NodeType<A>, u32>) {
+        let graph = self.get_graph();
+
+        let digraph = Dot::with_config(&graph, &[Config::EdgeNoLabel]);
+        (format!("{:?}", digraph), graph)
+    }
+
+    pub fn get_graph(&mut self) -> Graph<NodeType<A>, u32> {
         let behavior = self.initial_behavior.to_owned();
 
         let mut graph = Graph::<NodeType<A>, u32, petgraph::Directed>::new();
         let root_id = graph.add_node(NodeType::Root);
 
         Self::dfs_recursive(&mut graph, behavior, root_id);
-
-        let digraph = Dot::with_config(&graph, &[Config::EdgeNoLabel]);
-        (format!("{:?}", digraph), graph)
+        graph
     }
 
     /// Retrieve a mutable reference to the blackboard for
